@@ -1,0 +1,55 @@
+{
+  "name": "@saphe/react-forms",
+  "author": "William Ford <william@saphewebdesign.com>",
+  "version": "0.1.1",
+  "description": "A Lightweight, Declarative, Typescript-First Form Engine for React Apps",
+  "keywords": [
+    "react",
+    "forms",
+    "typescript"
+  ],
+  "bugs": "https://github.com/saphewilliam/saphe-react-forms/issues",
+  "homepage": "https://github.com/saphewilliam/saphe-react-forms#readme",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "types": "dist",
+  "scripts": {
+    "build": "rm -rf ./build && tsc",
+    "lint": "yarn lint:code && tsc --noEmit",
+    "lint:code": "eslint . --ext ts,tsx --fix",
+    "lint:style": "stylelint **/*.scss --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saphewilliam/saphe-react-forms.git"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "prettier": "^2.2.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "stylelint": "^13.9.0",
+    "stylelint-config-sass-guidelines": "^7.1.0",
+    "typescript": "^4.1.3"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  }
+}

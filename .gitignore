@@ -1,0 +1,6 @@
+# Compiled output
+dist/
+node_modules/
+
+# Error logs
+yarn-error.log
