@@ -1,7 +1,7 @@
 {
   "name": "@saphe/react-forms",
   "author": "William Ford <william@saphewebdesign.com>",
-  "version": "0.1.1",
+  "version": "0.0.1",
   "description": "A Lightweight, Declarative, Type-Safe Form Engine for React Apps",
   "keywords": [
     "typescript",
@@ -29,8 +29,7 @@
     "dist"
   ],
   "publishConfig": {
-    "access": "public",
-    "registry":"https://npm.pkg.github.com"
+    "access": "public"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
