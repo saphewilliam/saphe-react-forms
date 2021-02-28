@@ -1,8 +1,8 @@
 {
   "name": "@saphe/react-forms",
+  "version": "0.0.3",
+  "description": "A lightweight, declarative, type-safe form engine for React apps",
   "author": "William Ford <william@saphewebdesign.com>",
-  "version": "0.0.1",
-  "description": "A Lightweight, Declarative, Type-Safe Form Engine for React Apps",
   "keywords": [
     "typescript",
     "react",
@@ -15,24 +15,26 @@
   "repository": "saphewilliam/saphe-react-forms",
   "license": "MIT",
   "main": "dist/index.js",
-  "types": "dist",
+  "module": "dist/index.es.js",
+  "jsnext:main": "build/index.es.js",
   "sideEffects": false,
   "scripts": {
-    "build": "rm -rf ./dist && tsc",
+    "build": "rimraf ./dist && rollup -c",
     "lint": "yarn lint:code && tsc --noEmit",
     "lint:code": "eslint ./src --ext ts,tsx --fix",
-    "lint:style": "stylelint ./src/**/*.scss --fix"
+    "lint:style": "stylelint ./src/**/*.scss --fix",
+    "test": "jest"
   },
   "files": [
-    "LICENSE",
-    "README.md",
     "dist"
   ],
   "publishConfig": {
     "access": "public"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.20",
     "@types/react": "^17.0.0",
+    "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.18.0",
@@ -41,15 +43,28 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
+    "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
+    "react-test-renderer": "^17.0.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.40.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.30.0",
     "stylelint": "^13.9.0",
     "stylelint-config-sass-guidelines": "^7.1.0",
+    "ts-jest": "^26.5.2",
     "typescript": "^4.1.3"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
     "react-dom": ">=17.0.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }
