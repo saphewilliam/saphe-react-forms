@@ -1,9 +1,9 @@
 import React from 'react';
-import { TextAreaFieldProps } from '~/utils/fieldProps';
+import { TextAreaFieldProps } from '../../../utils/fieldTypes';
 
 export function BSTextAreaField(props: TextAreaFieldProps): JSX.Element {
   return (
-    <div>
+    <div className="mb-3">
       <label htmlFor={props.name} className="form-label">
         {props.label}
       </label>
@@ -13,6 +13,7 @@ export function BSTextAreaField(props: TextAreaFieldProps): JSX.Element {
         id={props.name}
         name={props.name}
         value={props.value}
+        placeholder={props.placeholder}
         onChange={props.onChange}
         onBlur={props.onBlur}
       />

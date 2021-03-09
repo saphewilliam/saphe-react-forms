@@ -12,14 +12,6 @@
     "settings": {
         "react": {
             "version": "detect"
-        },
-        "import/resolver": {
-            "alias": {
-                "map": [
-                    ["^~", "./src"]
-                ],
-                "extensions": [".ts", ".tsx"]
-            }
         }
     },
     "extends": [
@@ -39,38 +31,6 @@
                 "order": "asc", 
                 "caseInsensitive": true 
             }
-            // "pathGroups": [
-            //     {
-            //         "pattern": "~/graphql/__generated__/**",
-            //         "group": "parent",
-            //         "position": "before"
-            //     },
-            //     {
-            //         "pattern": "~/graphql/**",
-            //         "group": "parent",
-            //         "position": "before"
-            //     },
-            //     {
-            //         "pattern": "~/utils/**",
-            //         "group": "parent",
-            //         "position": "before"
-            //     },
-            //     {
-            //         "pattern": "~/components/**",
-            //         "group": "parent",
-            //         "position": "before"
-            //     },
-            //     {
-            //         "pattern": "~/pages/**",
-            //         "group": "parent",
-            //         "position": "before"
-            //     },
-            //     {
-            //         "pattern": "~/styles/**",
-            //         "group": "parent",
-            //         "position": "before"
-            //     }
-            // ]
         }]
     }
 }

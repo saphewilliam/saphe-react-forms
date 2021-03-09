@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectFieldProps } from '../../../utils/fieldProps';
+import { SelectFieldProps } from '../../../utils/fieldTypes';
 
 export function BSSelectField(props: SelectFieldProps): JSX.Element {
   return (
@@ -11,14 +11,14 @@ export function BSSelectField(props: SelectFieldProps): JSX.Element {
       )}
 
       <select
-        className={`form-control${props.touched && Boolean(props.error) ? ' is-invalid' : ''}`}
+        className={`form-select${props.touched && Boolean(props.error) ? ' is-invalid' : ''}`}
         id={props.name}
         name={props.name}
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
       >
-        <option value="-1">{props.placeholder || 'Select an option'}</option>
+        <option selected>{props.placeholder ?? 'Select an option'}</option>
         {props.options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

@@ -1,7 +1,6 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useState } from 'react';
-import { Fields, FieldTypes, FormValues } from '../utils/fieldTypes';
+import { Fields, FieldTypes, FormValues, FormStyle, HTMLField } from '../utils/fieldTypes';
 import Field from './Field';
-import { FormStyle } from '~/utils/formTypes';
 
 export interface FormState<T extends Fields> {
   touched: Record<string, boolean>;
@@ -52,12 +51,24 @@ function Form<T extends Fields>(props: Props<T>): JSX.Element {
     props.setSubmitting(false);
   };
 
-  const handleChange = (e: ChangeEvent<HTMLFormElement>, fieldName: string) => {
-    console.log(fieldName, e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLField>, fieldName: string) => {
+    setFormState({
+      ...formState,
+      values: {
+        ...formState.values,
+        [fieldName]: e.target.value,
+      },
+    });
   };
 
   const handleBlur = (fieldName: string) => {
-    console.log(fieldName, 'Blur event');
+    setFormState({
+      ...formState,
+      touched: {
+        ...formState.touched,
+        [fieldName]: true,
+      },
+    });
   };
 
   return (
@@ -70,7 +81,7 @@ function Form<T extends Fields>(props: Props<T>): JSX.Element {
             key={index}
             field={field}
             name={fieldName}
-            formStyle={FormStyle.BOOTSTRAP}
+            formStyle={FormStyle.BOOTSTRAP} // TODO make variable
             error={formState.error[fieldName] ?? 'Field name not found'} // TODO fix defaults
             touched={formState.touched[fieldName] ?? true} // TODO fix defaults
             value={formState.values[fieldName] ?? ''} // TODO fix defaults

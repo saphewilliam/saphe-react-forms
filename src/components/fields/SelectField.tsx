@@ -1,7 +1,6 @@
 import React from 'react';
+import { FormStyle, SelectFieldProps } from '../../utils/fieldTypes';
 import { BSSelectField } from '../packs/bootstrap/BSSelectField';
-import { SelectFieldProps } from '~/utils/fieldProps';
-import { FormStyle } from '~/utils/formTypes';
 
 interface Props extends SelectFieldProps {
   formStyle: FormStyle;

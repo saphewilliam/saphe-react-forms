@@ -1,4 +1,4 @@
-import React, { DependencyList, useState } from 'react';
+import React, { useState } from 'react';
 import { Fields, FormValues } from '../utils/fieldTypes';
 import FormComponent from './Form';
 
@@ -12,7 +12,8 @@ interface State {
   submitting: boolean;
 }
 
-function useForm<T extends Fields>(config: Config<T>, deps?: DependencyList): State {
+function useForm<T extends Fields>(config: Config<T>): State {
+  //, deps?: DependencyList): State { // TODO add dependency list
   const [submitting, setSubmitting] = useState(false);
   const { fields, onSubmit } = config;
 

@@ -1,7 +1,6 @@
 import React from 'react';
-import { TextAreaFieldProps } from '../../utils/fieldProps';
+import { FormStyle, TextAreaFieldProps } from '../../utils/fieldTypes';
 import { BSTextAreaField } from '../packs/bootstrap/BSTextAreaField';
-import { FormStyle } from '~/utils/formTypes';
 
 interface Props extends TextAreaFieldProps {
   formStyle: FormStyle;

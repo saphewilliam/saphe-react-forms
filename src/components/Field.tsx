@@ -6,11 +6,12 @@ import {
   ISelectField,
   ITextAreaField,
   ITextField,
+  HTMLField,
+  FormStyle,
 } from '../utils/fieldTypes';
 import SelectField from './fields/SelectField';
 import TextAreaField from './fields/TextAreaField';
 import TextField from './fields/TextField';
-import { FormStyle } from '~/utils/formTypes';
 
 interface Props<T extends Field> {
   formStyle: FormStyle;
@@ -19,8 +20,8 @@ interface Props<T extends Field> {
   touched: boolean;
   error: string;
   value: FieldValue<T>;
-  onChange: (e: ChangeEvent<any>) => void; // TODO fix any
-  onBlur: (e: FocusEvent<any>) => void; // TODO fix any
+  onChange: (e: ChangeEvent<HTMLField>) => void;
+  onBlur: (e: FocusEvent<HTMLField>) => void;
 }
 
 function Field<T extends Field>(props: Props<T>): JSX.Element {

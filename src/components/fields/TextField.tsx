@@ -1,7 +1,6 @@
 import React from 'react';
+import { FormStyle, TextFieldProps } from '../../utils/fieldTypes';
 import { BSTextField } from '../packs/bootstrap/BSTextField';
-import { TextFieldProps } from '~/utils/fieldProps';
-import { FormStyle } from '~/utils/formTypes';
 
 interface Props extends TextFieldProps {
   formStyle: FormStyle;
