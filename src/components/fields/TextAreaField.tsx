@@ -1,16 +1,16 @@
 import React from 'react';
-import { FormStyle, TextAreaFieldProps } from '../../utils/fieldTypes';
-import { BSTextAreaField } from '../packs/bootstrap/BSTextAreaField';
+import { FormStyles, TextAreaFieldProps } from '../../utils/fieldTypes';
+import BSTextAreaField from '../packs/bootstrap/BSTextAreaField';
 
 interface Props extends TextAreaFieldProps {
-  formStyle: FormStyle;
+  formStyle: FormStyles;
 }
 
 function TextAreaField(props: Props): JSX.Element {
   switch (props.formStyle) {
-    case FormStyle.BOOTSTRAP:
+    case FormStyles.BOOTSTRAP:
       return <BSTextAreaField {...props} />;
-    case FormStyle.MATERIAL:
+    case FormStyles.MATERIAL:
       return <div></div>;
   }
 }

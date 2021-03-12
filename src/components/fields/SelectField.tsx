@@ -1,16 +1,16 @@
 import React from 'react';
-import { FormStyle, SelectFieldProps } from '../../utils/fieldTypes';
-import { BSSelectField } from '../packs/bootstrap/BSSelectField';
+import { FormStyles, SelectFieldProps } from '../../utils/fieldTypes';
+import BSSelectField from '../packs/bootstrap/BSSelectField';
 
 interface Props extends SelectFieldProps {
-  formStyle: FormStyle;
+  formStyle: FormStyles;
 }
 
 function SelectField(props: Props): JSX.Element {
   switch (props.formStyle) {
-    case FormStyle.BOOTSTRAP:
+    case FormStyles.BOOTSTRAP:
       return <BSSelectField {...props} />;
-    case FormStyle.MATERIAL:
+    case FormStyles.MATERIAL:
       return <div></div>;
   }
 }

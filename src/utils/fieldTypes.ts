@@ -6,9 +6,16 @@ export enum FieldTypes {
   SELECT,
 }
 
-export enum FormStyle {
+export enum FormStyles {
   BOOTSTRAP,
   MATERIAL,
+}
+
+export enum ValidationModes {
+  ON_CHANGE,
+  ON_BLUR,
+  AFTER_BLUR,
+  ON_SUBMIT,
 }
 
 // Unique properties of the fields
@@ -29,31 +36,36 @@ interface ISelect {
 
 // Interfaces used by the user to declare fields
 
-interface IField {
+interface IFieldBase {
   label: string;
+  description?: string;
+  validation?: {
+    // mode?: ValidationModes;
+    required?: string;
+  };
 }
 
-export interface ITextField extends IField, IText {
+export interface ITextField extends IFieldBase, IText {
   type: FieldTypes.TEXT;
   initialValue?: FieldValue<ITextField>;
 }
 
-export interface ITextAreaField extends IField, ITextArea {
+export interface ITextAreaField extends IFieldBase, ITextArea {
   type: FieldTypes.TEXTAREA;
   initialValue?: FieldValue<ITextAreaField>;
 }
 
-export interface ISelectField extends IField, ISelect {
+export interface ISelectField extends IFieldBase, ISelect {
   type: FieldTypes.SELECT;
   initialValue?: FieldValue<ISelectField>;
 }
 
 // Interfaces used by a developer to develop field components
 
-interface FieldProps<T extends Field, E extends HTMLField> {
+export interface FieldProps<T extends IField, E extends HTMLField> {
   name: string;
   label: string;
-  touched: boolean;
+  description?: string;
   error: string;
   value: FieldValue<T>;
   onChange: (e: ChangeEvent<E>) => void;
@@ -69,13 +81,13 @@ export type SelectFieldProps = ISelect & FieldProps<ISelectField, HTMLSelectElem
 // Helpers
 
 export type HTMLField = HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-export type Field = ITextField | ITextAreaField | ISelectField;
+export type IField = ITextField | ITextAreaField | ISelectField;
 
 export interface Fields {
-  [fieldName: string]: Field;
+  [fieldName: string]: IField;
 }
 
-export type FieldValue<T extends Field> = T extends ITextField
+export type FieldValue<T extends IField> = T extends ITextField
   ? string
   : T extends ITextAreaField
   ? string

@@ -23,6 +23,6 @@ export default {
       tsconfig: 'tsconfig.json',
     }),
     commonjs(),
-    uglify(),
+    uglify({ output: { comments: false } }),
   ],
 };

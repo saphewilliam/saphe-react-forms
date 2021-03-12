@@ -10,7 +10,7 @@
     "declarationMap": false,
     "sourceMap": true,
     "rootDir": "src",
-    "removeComments": true,
+    "removeComments": false,
     "strict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
