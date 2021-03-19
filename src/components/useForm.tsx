@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Fields, FormValues, ValidationModes } from '../utils/fieldTypes';
+import React, { useCallback, useState } from 'react';
+import { CaptchaConfig, Fields, FormValues, ValidationModes } from '../utils/fieldTypes';
 import FormComponent from './Form';
 
 interface Config<T extends Fields> {
@@ -8,6 +8,9 @@ interface Config<T extends Fields> {
 
   /** The void function that fires on a form submission event */
   onSubmit: (formValues: FormValues<T>) => void | Promise<void>;
+
+  /** Add RECAPTCHA validation to the form */
+  captcha?: CaptchaConfig;
 
   /** The global form validation mode, defaults to ValidationModes.AFTER_BLUR */
   validationMode?: ValidationModes;
@@ -24,16 +27,20 @@ interface State {
 function useForm<T extends Fields>(config: Config<T>): State {
   //, deps?: DependencyList): State { // TODO add dependency list
   const [submitting, setSubmitting] = useState(false);
-  const { fields, validationMode, onSubmit } = config;
+  const { fields, validationMode, onSubmit, captcha } = config;
 
-  const Form = () => (
-    <FormComponent
-      fields={fields}
-      onSubmit={onSubmit}
-      validationMode={validationMode}
-      submitting={submitting}
-      setSubmitting={setSubmitting}
-    />
+  const Form = useCallback(
+    () => (
+      <FormComponent
+        fields={fields}
+        onSubmit={onSubmit}
+        validationMode={validationMode}
+        submitting={submitting}
+        setSubmitting={setSubmitting}
+        captcha={captcha}
+      />
+    ),
+    [config, submitting],
   );
 
   return { Form, submitting };

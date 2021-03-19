@@ -8,8 +8,10 @@ import {
   ValidationModes,
   FieldValue,
   IField,
+  CaptchaConfig,
 } from '../utils/fieldTypes';
 import Field from './Field';
+import useCaptcha from './useCaptcha';
 
 interface FormState<T extends Fields> {
   touched: Record<string, boolean>;
@@ -22,8 +24,22 @@ interface Props<T extends Fields> {
   onSubmit: (formValues: FormValues<T>) => void | Promise<void>;
   submitting: boolean;
   setSubmitting: Dispatch<SetStateAction<boolean>>;
+  captcha?: CaptchaConfig;
   validationMode?: ValidationModes;
   formStyle?: FormStyles;
+}
+
+function formatFieldValue<T extends IField>(
+  field: IField | undefined,
+  stringValue: string,
+): FieldValue<T> {
+  if (field === undefined) throw new Error(`Undefined field could not be decoded`);
+  switch (field.type) {
+    case FieldTypes.TEXT:
+    case FieldTypes.TEXTAREA:
+    case FieldTypes.SELECT:
+      return stringValue as FieldValue<T>;
+  }
 }
 
 function getDefaultValue<T extends IField>(field: IField): FieldValue<T> {
@@ -53,12 +69,17 @@ function getInitialState<T extends Fields>(fields: T): FormState<T> {
   return { touched, errors, values: values as FormValues<T> };
 }
 
-// TODO
 function validateField<T extends IField>(
   field: IField | undefined,
   value: FieldValue<T> | undefined,
 ): string {
-  return new Date().toISOString();
+  if (field === undefined) return '';
+
+  // Check if the field is required
+  if (field.validation?.required !== undefined && (!value || value === getDefaultValue(field)))
+    return field.validation.required;
+
+  return '';
 }
 
 function Form<T extends Fields>(props: Props<T>): JSX.Element {
@@ -67,24 +88,33 @@ function Form<T extends Fields>(props: Props<T>): JSX.Element {
     onSubmit,
     submitting,
     setSubmitting,
+    captcha,
     validationMode = ValidationModes.AFTER_BLUR,
     formStyle = FormStyles.BOOTSTRAP,
   } = props;
 
   const [formState, setFormState] = useState<FormState<T>>(getInitialState(fields));
+  const { Recaptcha, captchaVerified } = useCaptcha(captcha);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     let canSubmit = true;
-    for (const fieldName in Object.keys(fields)) {
-      let error = formState.errors[fieldName] ?? '';
-      if (validationMode === ValidationModes.ON_SUBMIT)
-        error = validateField(fields[fieldName], formState.values[fieldName]);
+    const errors: Record<string, string> = {};
+    for (const [fieldName, field] of Object.entries(fields)) {
+      const error = validateField(field, formState.values[fieldName]);
+      errors[fieldName] = error;
       if (error !== '') canSubmit = false;
     }
 
-    if (canSubmit) {
+    if (!canSubmit) {
+      setFormState({
+        ...formState,
+        errors,
+      });
+    } else if (!captchaVerified) {
+      alert(captcha?.errorMessage);
+    } else {
       setSubmitting(true);
       await onSubmit(formState.values);
       setSubmitting(false);
@@ -97,7 +127,7 @@ function Form<T extends Fields>(props: Props<T>): JSX.Element {
       validationMode === ValidationModes.ON_CHANGE ||
       (validationMode === ValidationModes.AFTER_BLUR && formState.touched[fieldName])
     )
-      error = validateField(fields[fieldName], formState.values[fieldName]);
+      error = validateField(fields[fieldName], formatFieldValue(fields[fieldName], e.target.value));
 
     setFormState({
       ...formState,
@@ -107,7 +137,7 @@ function Form<T extends Fields>(props: Props<T>): JSX.Element {
       },
       values: {
         ...formState.values,
-        [fieldName]: e.target.value,
+        [fieldName]: formatFieldValue(fields[fieldName], e.target.value),
       },
     });
   };
@@ -148,6 +178,9 @@ function Form<T extends Fields>(props: Props<T>): JSX.Element {
           />
         );
       })}
+
+      <Recaptcha />
+
       <button type="submit" disabled={submitting} className="btn btn-primary">
         {submitting ? 'Submitting...' : 'Submit'}
       </button>

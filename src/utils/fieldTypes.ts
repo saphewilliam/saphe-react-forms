@@ -18,6 +18,12 @@ export enum ValidationModes {
   ON_SUBMIT,
 }
 
+export interface CaptchaConfig {
+  key: string;
+  locale: string;
+  errorMessage: string;
+}
+
 // Unique properties of the fields
 
 interface IText {
@@ -26,7 +32,7 @@ interface IText {
 
 interface ITextArea {
   placeholder?: FieldValue<ITextAreaField>;
-  rows: number;
+  rows?: number;
 }
 
 interface ISelect {
