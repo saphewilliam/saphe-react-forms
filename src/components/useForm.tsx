@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { CaptchaConfig, Fields, FormValues, ValidationModes } from '../utils/fieldTypes';
+import { RecaptchaConfig, Fields, FormValues, ValidationModes } from '../utils/fieldTypes';
 import FormComponent from './Form';
 
 interface Config<T extends Fields> {
@@ -7,10 +7,10 @@ interface Config<T extends Fields> {
   fields: T;
 
   /** The void function that fires on a form submission event */
-  onSubmit: (formValues: FormValues<T>) => void | Promise<void>;
+  onSubmit: (formValues: FormValues<T>, recaptchaToken: string) => void | Promise<void>;
 
   /** Add RECAPTCHA validation to the form */
-  captcha?: CaptchaConfig;
+  recaptcha?: RecaptchaConfig;
 
   /** The global form validation mode, defaults to ValidationModes.AFTER_BLUR */
   validationMode?: ValidationModes;
@@ -27,7 +27,7 @@ interface State {
 function useForm<T extends Fields>(config: Config<T>): State {
   //, deps?: DependencyList): State { // TODO add dependency list
   const [submitting, setSubmitting] = useState(false);
-  const { fields, validationMode, onSubmit, captcha } = config;
+  const { fields, validationMode, onSubmit, recaptcha } = config;
 
   const Form = useCallback(
     () => (
@@ -37,7 +37,7 @@ function useForm<T extends Fields>(config: Config<T>): State {
         validationMode={validationMode}
         submitting={submitting}
         setSubmitting={setSubmitting}
-        captcha={captcha}
+        recaptcha={recaptcha}
       />
     ),
     [config, submitting],

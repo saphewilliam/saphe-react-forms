@@ -18,7 +18,7 @@ export enum ValidationModes {
   ON_SUBMIT,
 }
 
-export interface CaptchaConfig {
+export interface RecaptchaConfig {
   key: string;
   locale: string;
   errorMessage: string;

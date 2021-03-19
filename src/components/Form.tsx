@@ -8,10 +8,10 @@ import {
   ValidationModes,
   FieldValue,
   IField,
-  CaptchaConfig,
+  RecaptchaConfig,
 } from '../utils/fieldTypes';
 import Field from './Field';
-import useCaptcha from './useCaptcha';
+import useRecaptcha from './useRecaptcha';
 
 interface FormState<T extends Fields> {
   touched: Record<string, boolean>;
@@ -21,10 +21,10 @@ interface FormState<T extends Fields> {
 
 interface Props<T extends Fields> {
   fields: T;
-  onSubmit: (formValues: FormValues<T>) => void | Promise<void>;
+  onSubmit: (formValues: FormValues<T>, recaptchaToken: string) => void | Promise<void>;
   submitting: boolean;
   setSubmitting: Dispatch<SetStateAction<boolean>>;
-  captcha?: CaptchaConfig;
+  recaptcha?: RecaptchaConfig;
   validationMode?: ValidationModes;
   formStyle?: FormStyles;
 }
@@ -88,13 +88,13 @@ function Form<T extends Fields>(props: Props<T>): JSX.Element {
     onSubmit,
     submitting,
     setSubmitting,
-    captcha,
+    recaptcha,
     validationMode = ValidationModes.AFTER_BLUR,
     formStyle = FormStyles.BOOTSTRAP,
   } = props;
 
   const [formState, setFormState] = useState<FormState<T>>(getInitialState(fields));
-  const { Recaptcha, captchaVerified } = useCaptcha(captcha);
+  const { Recaptcha, recaptchaToken } = useRecaptcha(recaptcha);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -112,11 +112,11 @@ function Form<T extends Fields>(props: Props<T>): JSX.Element {
         ...formState,
         errors,
       });
-    } else if (!captchaVerified) {
-      alert(captcha?.errorMessage);
+    } else if (!!recaptcha && !recaptchaToken) {
+      alert(recaptcha.errorMessage);
     } else {
       setSubmitting(true);
-      await onSubmit(formState.values);
+      await onSubmit(formState.values, recaptchaToken ?? '');
       setSubmitting(false);
     }
   };

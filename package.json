@@ -1,6 +1,6 @@
 {
   "name": "@saphe/react-forms",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "A lightweight, declarative, type-safe form engine for React apps",
   "author": "William Ford <william@saphewebdesign.com>",
   "keywords": [
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@types/jest": "26.0.20",
     "@types/react": "17.0.0",
-    "@types/react-recaptcha": "2.3.3",
+    "@types/react-google-recaptcha": "2.1.0",
     "@types/react-test-renderer": "17.0.1",
     "@typescript-eslint/eslint-plugin": "4.14.1",
     "@typescript-eslint/parser": "4.14.1",
@@ -68,6 +68,6 @@
     "testEnvironment": "node"
   },
   "dependencies": {
-    "react-recaptcha": "2.3.10"
+    "react-google-recaptcha": "2.1.0"
   }
 }
